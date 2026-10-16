@@ -28,12 +28,15 @@
     gap: 24px;
 }
 
-/* 原来是 11 帧动图，现改为静态立绘，用 CSS 补回呼吸感 */
+/* 原来是 11 帧动图，现改为静态立绘，用 CSS 遮罩羽化与全息光晕补回科技呼吸感 */
 .preloader-gif {
-    width: 180px;
-    height: 180px;
+    width: 175px;
+    height: 175px;
     object-fit: contain;
-    animation: mascotBreath 3s ease-in-out infinite;
+    -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent 98%);
+    mask-image: linear-gradient(to bottom, #000 65%, transparent 98%);
+    filter: drop-shadow(0 8px 24px rgba(var(--accent-rgb), 0.35));
+    animation: mascotBreath 3.5s ease-in-out infinite;
 }
 
 @keyframes mascotBreath {

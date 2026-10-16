@@ -1,8 +1,8 @@
 /**
  * @module ui/theme
- * @description 主题切换、视图切换、语言切换、主题设置应用（footer/mascot/background/sakura）
+ * @description 主题切换、视图切换、语言切换、主题设置应用（footer/mascot/background/particles）
  * @dependencies core/state.js, core/constants.js, i18n/index.js, ui/preloader.js, ui/nodes.js, utils/helpers.js
- * @exports initTheme, applyTheme, toggleTheme, toggleLang, initView, applyView, setView, applyThemeSettings, applyBackgroundSettings, applySakura
+ * @exports initTheme, applyTheme, toggleTheme, toggleLang, initView, applyView, setView, applyThemeSettings, applyBackgroundSettings, applyParticles
  */
 
 import { state } from '../core/state.js';
@@ -129,7 +129,7 @@ export function setView(view) {
 }
 
 /**
- * 应用主题设置（footer/mascot/preloader/background/sakura）
+ * 应用主题设置（footer/mascot/preloader/background/particles）
  */
 export function applyThemeSettings() {
     const customFooter = state.themeSettings.custom_footer;
@@ -176,7 +176,7 @@ export function applyThemeSettings() {
     }
 
     applyBackgroundSettings();
-    applySakura();
+    applyParticles();
 }
 
 /**
@@ -244,37 +244,26 @@ export function applyBackgroundSettings() {
 }
 
 /**
- * 应用樱花特效（根据配置动态加载/移除 sakura.js）
+ * 应用电子粒子特效（根据配置动态加载/移除 particles.js）
+ * 配置键沿用历史的 sakura_enabled，改名会让已部署站点的既有设置失效。
  */
-export function applySakura() {
-    const sakuraEnabled = state.themeSettings.sakura_enabled !== false;
-    const sakuraScript = document.getElementById('sakura-script');
+export function applyParticles() {
+    const particlesEnabled = state.themeSettings.sakura_enabled !== false;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const script = document.getElementById('particle-script');
 
-    if (sakuraEnabled && !sakuraScript) {
-        const style = document.createElement('style');
-        style.id = 'sakura-style';
-        style.textContent = '#sakura-canvas, canvas[id*="sakura"] { z-index: 99999 !important; pointer-events: none !important; position: fixed !important; top: 0 !important; left: 0 !important; }';
-        document.head.appendChild(style);
-
-        const script = document.createElement('script');
-        script.id = 'sakura-script';
-        script.type = 'text/javascript';
-        script.src = './assets/js/sakura.js';
-        script.onload = function() {
-            const canvas = document.querySelector('canvas[style*="fixed"]');
-            if (canvas) {
-                canvas.id = canvas.id || 'sakura-canvas';
-                canvas.style.zIndex = '99999';
-                canvas.style.pointerEvents = 'none';
-            }
-        };
-        document.body.appendChild(script);
-    } else if (!sakuraEnabled && sakuraScript) {
-        sakuraScript.remove();
-        const sakuraStyle = document.getElementById('sakura-style');
-        if (sakuraStyle) sakuraStyle.remove();
-        let sakuraCanvas = document.getElementById('sakura-canvas');
-        if (!sakuraCanvas) sakuraCanvas = document.querySelector('canvas[style*="fixed"]');
-        if (sakuraCanvas) sakuraCanvas.remove();
+    if (particlesEnabled && !reducedMotion && !script) {
+        const el = document.createElement('script');
+        el.id = 'particle-script';
+        el.type = 'text/javascript';
+        el.src = './assets/js/particles.js';
+        document.body.appendChild(el);
+    } else if ((!particlesEnabled || reducedMotion) && script) {
+        if (window.__particles && typeof window.__particles.destroy === 'function') {
+            window.__particles.destroy();
+        }
+        script.remove();
+        const canvas = document.getElementById('particle-canvas');
+        if (canvas) canvas.remove();
     }
 }

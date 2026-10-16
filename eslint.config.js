@@ -3,7 +3,6 @@ import globals from 'globals';
 export default [
   {
     files: ['dist/assets/js/**/*.js'],
-    ignores: ['dist/assets/js/sakura.js'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',

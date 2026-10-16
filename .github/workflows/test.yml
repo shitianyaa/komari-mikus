@@ -30,10 +30,10 @@ jobs:
 
       - name: Check no var declarations in JS
         run: |
-          count=$(grep -rP '\bvar\s' dist/assets/js/ --include='*.js' -l --exclude='sakura.js' | wc -l)
+          count=$(grep -rP '\bvar\s' dist/assets/js/ --include='*.js' -l | wc -l)
           if [ "$count" -gt 0 ]; then
             echo "Found var declarations in:"
-            grep -rP '\bvar\s' dist/assets/js/ --include='*.js' -l --exclude='sakura.js'
+            grep -rP '\bvar\s' dist/assets/js/ --include='*.js' -l
             exit 1
           fi
           echo "No var declarations found"
@@ -41,7 +41,7 @@ jobs:
       - name: Validate required files
         run: |
           missing=""
-          for f in komari-theme.json dist/index.html dist/assets/css/base.css dist/assets/js/app.js LICENSE; do
+          for f in komari-theme.json dist/index.html dist/assets/css/base.css dist/assets/js/app.js dist/assets/js/particles.js LICENSE; do
             if [ ! -f "$f" ]; then missing="$missing $f"; fi
           done
           if [ -n "$missing" ]; then

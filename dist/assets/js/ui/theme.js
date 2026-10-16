@@ -12,16 +12,21 @@ import { clearPreloaderTimer } from './preloader.js';
 import { renderAll } from './nodes.js';
 import { isMobileDevice } from '../utils/helpers.js';
 
+/** 模块私有：matchMedia 监听器是否已绑定（initTheme 会被调用两次，避免重复注册） */
+let themeListenerBound = false;
+
 /**
- * 初始化主题（读取 localStorage 或配置默认值，监听系统主题变化）
+ * 初始化主题
+ * @param {boolean} [useConfigDefault] - 是否采用主题配置里的 default_theme。
+ *   首次调用传 false（此时 RPC 尚未返回，配置还拿不到，结果与 <head> 内联脚本一致）；
+ *   配置加载完成后以 true 再调一次，仅在访客无 localStorage 偏好时生效。
  */
-export function initTheme() {
+export function initTheme(useConfigDefault) {
     const saved = localStorage.getItem('appearance');
-    const configDefault = state.themeSettings.default_theme;
     let preferred = 'system';
 
-    if (configDefault) {
-        preferred = THEME_MAP[configDefault] || configDefault;
+    if (useConfigDefault && state.themeSettings.default_theme) {
+        preferred = THEME_MAP[state.themeSettings.default_theme] || state.themeSettings.default_theme;
     }
 
     let theme = saved || preferred;
@@ -32,12 +37,15 @@ export function initTheme() {
     state.currentTheme = theme;
     applyTheme(theme);
 
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
-        const saved = localStorage.getItem('appearance');
-        if (!saved || saved === 'system') {
-            applyTheme(e.matches ? 'dark' : 'light');
-        }
-    });
+    if (!themeListenerBound) {
+        themeListenerBound = true;
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+            const saved = localStorage.getItem('appearance');
+            if (!saved || saved === 'system') {
+                applyTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+    }
 }
 
 /**
@@ -47,9 +55,10 @@ export function initTheme() {
 export function applyTheme(theme) {
     state.currentTheme = theme;
     document.documentElement.setAttribute('data-theme', theme);
-    const themeColor = theme === 'dark' ? '#0f0a15' : '#f8f6f9';
+    // 直接读 CSS 变量，避免与 base.css 里的配色各维护一份
+    const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg-primary').trim();
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', themeColor);
+    if (meta) meta.setAttribute('content', bg || (theme === 'dark' ? '#0d0812' : '#f2f8fc'));
 }
 
 /**
@@ -148,7 +157,11 @@ export function applyThemeSettings() {
             greetingIcon.style.display = '';
             if (welcomeGreeting) welcomeGreeting.classList.remove('no-mascot');
             if (mascotUrl) {
-                greetingIcon.src = mascotUrl;
+                const lightSlot = greetingIcon.querySelector('.mascot-light');
+                if (lightSlot) lightSlot.src = mascotUrl;
+                greetingIcon.classList.add('has-custom-mascot');
+            } else {
+                greetingIcon.classList.remove('has-custom-mascot');
             }
         }
     }

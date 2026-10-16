@@ -36,10 +36,15 @@
 .logo-icon {
     width: 36px;
     height: 36px;
-    border-radius: var(--radius-sm);
+    border-radius: 50%;
     object-fit: contain;
     flex-shrink: 0;
-    transition: transform var(--transition);
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.logo-icon.brand-light,
+.logo-icon.brand-dark {
+    box-shadow: 0 0 0 1.5px var(--accent), 0 0 8px rgba(var(--accent-rgb), 0.45);
 }
 
 .logo:hover .logo-icon {
@@ -119,7 +124,7 @@
 .search-box input:focus {
     border-color: var(--accent);
     background: var(--bg-secondary);
-    box-shadow: 0 0 0 3px rgba(232, 102, 138, 0.15);
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.15);
 }
 
 .search-box input::placeholder {

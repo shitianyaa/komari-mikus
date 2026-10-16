@@ -97,7 +97,7 @@ body.has-custom-background .node-api-tag.tag-orange {
 
 body.has-custom-background .node-api-tag.tag-purple,
 body.has-custom-background .node-api-tag.tag-pink {
-    background: rgba(232, 102, 138, 0.15);
+    background: rgba(var(--accent-rgb), 0.15);
 }
 
 body.has-custom-background .node-api-tag.tag-cyan {

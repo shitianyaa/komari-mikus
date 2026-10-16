@@ -1,35 +1,36 @@
+/* 浅色主题 = 阿洛娜（蔚蓝档案蓝白：淡青蓝高光 + 白色卡片 + 蓝色强调色） */
 :root {
-    --bg-primary: #f8f6f9;
+    --bg-primary: #f2f8fc;
     --bg-secondary: #ffffff;
-    --bg-tertiary: #f0edf3;
+    --bg-tertiary: #e7f2fa;
     --bg-card: #ffffff;
     --bg-card-rgb: 255, 255, 255;
-    --bg-card-hover: #faf8fc;
+    --bg-card-hover: #f5fbff;
     --bg-modal: #ffffff;
-    --bg-overlay: rgba(0, 0, 0, 0.4);
-    --text-primary: #2d1b3d;
-    --text-secondary: #6b5a7d;
-    --text-tertiary: #9b8aad;
+    --bg-overlay: rgba(12, 44, 66, 0.35);
+    --text-primary: #12314a;
+    --text-secondary: #48687f;
+    --text-tertiary: #7d9bb0;
     --text-inverse: #ffffff;
-    --border-color: #e8e0f0;
-    --border-color-rgb: 232, 224, 240;
-    --border-light: #f0eaf5;
-    --accent: #e8668a;
-    --accent-rgb: 232, 102, 138;
-    --accent-light: #fce4ec;
-    --accent-hover: #d44a72;
-    --success: #4caf7d;
-    --success-light: #e8f5e9;
-    --warning: #f5a623;
-    --warning-light: #fff8e1;
-    --danger: #e74c5e;
-    --danger-light: #fde8eb;
-    --info: #5c9ced;
-    --info-light: #e3f0ff;
-    --shadow-sm: 0 1px 3px rgba(45, 27, 61, 0.06);
-    --shadow-md: 0 4px 12px rgba(45, 27, 61, 0.08);
-    --shadow-lg: 0 8px 30px rgba(45, 27, 61, 0.12);
-    --shadow-card: 0 2px 8px rgba(45, 27, 61, 0.05);
+    --border-color: #d8e8f3;
+    --border-color-rgb: 216, 232, 243;
+    --border-light: #eaf4fb;
+    --accent: #1c7aae;
+    --accent-rgb: 28, 122, 174;
+    --accent-light: #e0f1fb;
+    --accent-hover: #166b9c;
+    --success: #2fa36b;
+    --success-light: #e3f6ec;
+    --warning: #d98a12;
+    --warning-light: #fdf3e0;
+    --danger: #d94a5f;
+    --danger-light: #fdeaee;
+    --info: #4a9ee8;
+    --info-light: #e4f2fd;
+    --shadow-sm: 0 1px 3px rgba(18, 49, 74, 0.06);
+    --shadow-md: 0 4px 12px rgba(18, 49, 74, 0.08);
+    --shadow-lg: 0 8px 30px rgba(18, 49, 74, 0.12);
+    --shadow-card: 0 2px 8px rgba(18, 49, 74, 0.05);
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
@@ -41,77 +42,90 @@
     --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
     --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
     --header-height: 64px;
-    --sakura-1: #ffb7c5;
-    --sakura-2: #ff8fa3;
-    --sakura-3: #e8668a;
-    --sakura-4: #c94064;
-    --chart-cpu: #e8668a;
-    --chart-ram: #4caf7d;
-    --chart-network-down: #5c9ced;
-    --chart-network-up: #f5a623;
-    --chart-disk: #7ab3f7;
-    --chart-process: #ff8fa3;
+    --deco-1: #8fd8f0;
+    --deco-2: #5ec2ea;
+    --deco-3: #1c7aae;
+    --deco-4: #166b9c;
+    --particle-1: #8fd8f0;
+    --particle-2: #38bdf8;
+    --particle-3: #ffffff;
+    --chart-cpu: #1c7aae;
+    --chart-ram: #2fa36b;
+    --chart-network-down: #4a9ee8;
+    --chart-network-up: #d98a12;
+    --chart-disk: #6cc4e8;
+    --chart-process: #5ec2ea;
     --chart-connections: #a78bfa;
     --chart-connections-udp: #34d399;
-    --chart-bg: #faf8fc;
-    --chart-grid: #ede6f3;
-    --chart-text: #9b8aad;
-    --chart-empty-text: #c4b8d0;
-    --chart-latency-grid: #ede6f3;
-    --chart-latency-text: #9b8aad;
-    --chart-loss-line: #f5a623;
-    --chart-hint-text: rgba(155, 138, 173, 0.6);
+    --chart-bg: #f7fcff;
+    --chart-grid: #e2eef7;
+    --chart-text: #7d9bb0;
+    --chart-empty-text: #b8cfe0;
+    --chart-latency-grid: #e2eef7;
+    --chart-latency-text: #7d9bb0;
+    --chart-loss-line: #d98a12;
+    --chart-hint-text: rgba(125, 155, 176, 0.6);
     --chart-dot-center: #ffffff;
 }
 
+/* 深色主题 = 普拉娜（深紫近黑底 + 白紫文字 + 品红 / 紫强调色） */
 [data-theme="dark"] {
-    --bg-primary: #0f0a15;
-    --bg-secondary: #1a1225;
-    --bg-tertiary: #241a32;
-    --bg-card: #1e1530;
-    --bg-card-rgb: 30, 21, 48;
-    --bg-card-hover: #261c3a;
-    --bg-modal: #1e1530;
-    --bg-overlay: rgba(0, 0, 0, 0.6);
-    --text-primary: #e8dff0;
-    --text-secondary: #a899b8;
-    --text-tertiary: #7a6b8a;
-    --text-inverse: #0f0a15;
-    --border-color: #2d2040;
-    --border-color-rgb: 45, 32, 64;
-    --border-light: #241a32;
-    --accent: #ff8fa3;
-    --accent-light: #3d1a2a;
-    --accent-hover: #ffb7c5;
-    --success: #5ec492;
-    --success-light: #1a2e22;
-    --warning: #f5b84a;
-    --warning-light: #2e2818;
-    --danger: #ff6b7a;
-    --danger-light: #2e1a1e;
-    --info: #7ab3f7;
-    --info-light: #1a2230;
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.4);
-    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.2);
-    --chart-cpu: #ff8fa3;
-    --chart-ram: #5ec492;
-    --chart-network-down: #7ab3f7;
-    --chart-network-up: #f5b84a;
-    --chart-disk: #93bbfd;
-    --chart-process: #ffb7c5;
+    --bg-primary: #0d0812;
+    --bg-secondary: #191227;
+    --bg-tertiary: #221834;
+    --bg-card: #1c142e;
+    --bg-card-rgb: 28, 20, 46;
+    --bg-card-hover: #251b3b;
+    --bg-modal: #1c142e;
+    --bg-overlay: rgba(0, 0, 0, 0.65);
+    --text-primary: #ece4f6;
+    --text-secondary: #b3a4c6;
+    --text-tertiary: #8577a0;
+    /* 深色的 accent 足够暗，白字对比 4.77 优于原来的深字，故用白 */
+    --text-inverse: #ffffff;
+    --border-color: #2e2244;
+    --border-color-rgb: 46, 34, 68;
+    --border-light: #221834;
+    --accent: #cc3a70;
+    --accent-rgb: 204, 58, 112;
+    --accent-light: #3a1229;
+    --accent-hover: #e0447f;
+    --success: #4fb783;
+    --success-light: #14291f;
+    --warning: #e0a33a;
+    --warning-light: #2b2413;
+    --danger: #f2586b;
+    --danger-light: #2e151b;
+    --info: #8bb8f5;
+    --info-light: #161d2e;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.45);
+    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.25);
+    --deco-1: #e0447f;
+    --deco-2: #a78bfa;
+    --deco-3: #c4b5fd;
+    --deco-4: #7c3aed;
+    --particle-1: #e0447f;
+    --particle-2: #a78bfa;
+    --particle-3: #f0abfc;
+    --chart-cpu: #e0447f;
+    --chart-ram: #4fb783;
+    --chart-network-down: #8bb8f5;
+    --chart-network-up: #e0a33a;
+    --chart-disk: #a78bfa;
+    --chart-process: #f472b6;
     --chart-connections: #c4b5fd;
-    --chart-connections-udp: #6ee7b7;
-    --chart-bg: #1a1225;
-    --chart-grid: #2d2040;
-    --chart-text: #7a6b8a;
+    --chart-connections-udp: #5eead4;
+    --chart-bg: #191227;
+    --chart-grid: #2e2244;
+    --chart-text: #8577a0;
     --chart-empty-text: #4a3d5c;
-    --chart-latency-grid: #2d2040;
-    --chart-latency-text: #7a6b8a;
-    --chart-loss-line: #f5b84a;
-    --chart-hint-text: rgba(122, 107, 138, 0.6);
-    --chart-dot-center: #1e1530;
+    --chart-latency-grid: #2e2244;
+    --chart-latency-text: #8577a0;
+    --chart-loss-line: #e0a33a;
+    --chart-hint-text: rgba(133, 119, 160, 0.6);
+    --chart-dot-center: #1c142e;
 }
 
 .custom-background {
@@ -217,17 +231,18 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
+    /* 第二道渐变沿用浅色 info 的 rgb，不为它单独新增变量 */
     background:
-        radial-gradient(ellipse at 20% 20%, rgba(232, 102, 138, 0.04) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(92, 156, 237, 0.03) 0%, transparent 50%);
+        radial-gradient(ellipse at 20% 20%, rgba(var(--accent-rgb), 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(74, 158, 232, 0.04) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
 }
 
 [data-theme="dark"] body::before {
     background:
-        radial-gradient(ellipse at 20% 20%, rgba(232, 102, 138, 0.06) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(92, 156, 237, 0.04) 0%, transparent 50%);
+        radial-gradient(ellipse at 20% 20%, rgba(var(--accent-rgb), 0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(74, 158, 232, 0.04) 0%, transparent 50%);
 }
 
 #app {
@@ -613,4 +628,50 @@ textarea {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+}
+
+/* ==================== 阿洛娜 / 普拉娜 双形态切换 ==================== */
+
+/* 浅色 = 阿洛娜（默认），深色 = 普拉娜。
+   纯 CSS 驱动，无需 JS 参与：preloader 阶段主题由 <head> 内联脚本提前设好，
+   因此首帧就能取到正确的一张。 */
+.brand-light,
+.mascot-light {
+    display: block;
+}
+
+.brand-dark,
+.mascot-dark {
+    display: none;
+}
+
+[data-theme="dark"] .brand-light,
+[data-theme="dark"] .mascot-light {
+    display: none;
+}
+
+[data-theme="dark"] .brand-dark,
+[data-theme="dark"] .mascot-dark {
+    display: block;
+}
+
+/* 用户自定义吉祥物（mascot_url）时两个主题都只显示 light 槽位。
+   特异性 0,3,0 高于上面的 0,2,0，无需 !important。 */
+[data-theme="dark"] .greeting-icon.has-custom-mascot .mascot-dark {
+    display: none;
+}
+
+[data-theme="dark"] .greeting-icon.has-custom-mascot .mascot-light {
+    display: block;
+}
+
+/* 吉祥物图片本体：填满容器并保持比例，不拦截指针事件。
+   此处刻意不设 display —— 显示/隐藏完全交给上面的 .mascot-light / .mascot-dark。
+   若在此写 display: block，会与 .mascot-dark { display: none } 特异性相同（0,1,0）
+   且位置更靠后，导致浅色主题下两张图同时显示。 */
+.mascot {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
 }

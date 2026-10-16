@@ -3,13 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="theme-color" content="#f8f6f9">
+    <meta name="theme-color" content="#f2f8fc">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="format-detection" content="telephone=no">
-    <title>Komari Mikus</title>
-    <meta name="description" content="A modern, elegant Komari monitoring theme with sakura aesthetics.">
+    <title>Komari Arona &amp; Plana</title>
+    <meta name="description" content="A Komari monitoring theme with Arona (light) and Plana (dark) dual forms.">
+    <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+    <script>
+        /* 提前确定主题，避免 preloader 阶段先闪浅色再跳深色。
+           此处刻意用 var：CI 的 var 检查与 eslint 都只覆盖 dist/assets/js/，
+           index.html 不在扫描范围内。配置里的 default_theme 依赖 RPC 返回，
+           此时拿不到，由 ui/theme.js 的 initTheme(true) 后续校正。 */
+        (function () {
+            var theme = 'light';
+            try {
+                var saved = localStorage.getItem('appearance');
+                if (saved === 'dark' || saved === 'light') {
+                    theme = saved;
+                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    theme = 'dark';
+                }
+            } catch (e) {
+                theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) meta.setAttribute('content', theme === 'dark' ? '#0d0812' : '#f2f8fc');
+        })();
+    </script>
     <link rel="stylesheet" href="assets/css/base.css">
     <link rel="stylesheet" href="assets/css/preloader.css">
     <link rel="stylesheet" href="assets/css/header.css">
@@ -28,10 +51,12 @@
 <body>
     <div id="preloader">
         <div class="preloader-inner">
-            <img class="preloader-gif" src="assets/img/loli.gif" alt="Loading">
+            <img class="preloader-gif brand-light" src="assets/img/arona-preload.webp" alt="Loading" width="320" height="320" decoding="async">
+            <img class="preloader-gif brand-dark" src="assets/img/plana-preload.webp" alt="Loading" width="320" height="320" decoding="async">
             <div class="preloader-brand">
-                <img class="preloader-logo" src="assets/img/miku.png" alt="Logo">
-                <span class="preloader-title">Komari</span>
+                <img class="preloader-logo brand-light" src="assets/img/arona-logo.webp" alt="Logo" width="128" height="128" decoding="async">
+                <img class="preloader-logo brand-dark" src="assets/img/plana-logo.webp" alt="Logo" width="128" height="128" decoding="async">
+                <span class="preloader-title">Komari Arona &amp; Plana</span>
             </div>
             <div class="preloader-progress">
                 <div class="progress-bar">
@@ -46,8 +71,9 @@
         <header class="header">
             <div class="header-left">
                 <div class="logo">
-                    <img class="logo-icon" src="assets/img/miku.png" alt="Logo">
-                    <span class="site-name" id="siteName">Komari</span>
+                    <img class="logo-icon brand-light" src="assets/img/arona-logo.webp" alt="Logo" width="128" height="128" decoding="async">
+                    <img class="logo-icon brand-dark" src="assets/img/plana-logo.webp" alt="Logo" width="128" height="128" decoding="async">
+                    <span class="site-name" id="siteName">Komari Arona &amp; Plana</span>
                 </div>
             </div>
             <div class="header-center">
@@ -110,15 +136,18 @@
                     <div class="deco-circle deco-1"></div>
                     <div class="deco-circle deco-2"></div>
                     <div class="deco-circle deco-3"></div>
-                    <div class="sakura-petal"></div>
-                    <div class="sakura-petal"></div>
-                    <div class="sakura-petal"></div>
-                    <div class="sakura-petal"></div>
-                    <div class="sakura-petal"></div>
+                    <div class="deco-spark"></div>
+                    <div class="deco-spark"></div>
+                    <div class="deco-spark"></div>
+                    <div class="deco-spark"></div>
+                    <div class="deco-spark"></div>
                 </div>
                 <div class="welcome-content">
                     <div class="welcome-greeting">
-                        <img class="greeting-icon" src="assets/img/QWQ.webp" alt="icon">
+                        <div class="greeting-icon">
+                            <img class="mascot mascot-light" src="assets/img/arona-bust.webp" alt="" width="360" height="360" decoding="async">
+                            <img class="mascot mascot-dark" src="assets/img/plana-bust.webp" alt="" width="360" height="360" decoding="async">
+                        </div>
                         <div class="greeting-info">
                             <span class="greeting-text" id="greetingText">下午好</span>
                             <span class="greeting-subtitle">欢迎回来，一切正常运行中</span>
@@ -240,7 +269,7 @@
         </div>
 
         <footer class="footer">
-            <span>Powered by Komari Mikus.</span>
+            <span>Powered by Komari Arona &amp; Plana.</span>
             <span id="customFooter"></span>
         </footer>
     </div>

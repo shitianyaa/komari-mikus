@@ -28,11 +28,17 @@
     gap: 24px;
 }
 
+/* 原来是 11 帧动图，现改为静态立绘，用 CSS 补回呼吸感 */
 .preloader-gif {
     width: 180px;
     height: 180px;
     object-fit: contain;
-    border-radius: var(--radius-md);
+    animation: mascotBreath 3s ease-in-out infinite;
+}
+
+@keyframes mascotBreath {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-6px) scale(1.03); }
 }
 
 .preloader-brand {
@@ -41,11 +47,13 @@
     gap: 12px;
 }
 
+/* 圆形光环呼应角色头顶的天使光环 */
 .preloader-logo {
     width: 40px;
     height: 40px;
-    border-radius: var(--radius-sm);
+    border-radius: 50%;
     object-fit: contain;
+    box-shadow: 0 0 0 2px var(--accent), 0 0 12px rgba(var(--accent-rgb), 0.5);
     animation: logoBreath 2s ease-in-out infinite;
 }
 
@@ -83,7 +91,7 @@
 .progress-fill {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, var(--sakura-1), var(--sakura-3));
+    background: linear-gradient(90deg, var(--deco-1), var(--deco-3));
     border-radius: 2px;
     transition: width 0.3s ease;
 }

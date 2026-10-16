@@ -47,6 +47,9 @@ function cleanupBeforeInit() {
 function init() {
     cleanupBeforeInit();
     initErrorBoundary();
+    initLang();
+    // 此时配置尚未返回，与 <head> 内联脚本口径一致；配置到达后会用 initTheme(true) 校正
+    initTheme(false);
     startPreloaderSimulation();
     updateTime();
     timeIntervalId = setInterval(updateTime, 1000);
@@ -63,8 +66,7 @@ function init() {
 
     loadPublicSettings().then(function () {
         updatePreloader(30, '正在获取配置...');
-        initTheme();
-        initLang();
+        initTheme(true);
         initView();
         applyThemeSettings();
         return loadNodes();

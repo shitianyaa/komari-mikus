@@ -62,7 +62,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(to right, var(--accent), var(--accent-light, rgba(232, 102, 138, 0.5)));
+    background: linear-gradient(to right, var(--accent), var(--accent-light, rgba(var(--accent-rgb), 0.5)));
     transform-origin: left;
     transform: scaleX(0);
     transition: transform 0.1s ease;

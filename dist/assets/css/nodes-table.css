@@ -208,7 +208,7 @@
 }
 
 .table-card-tag.tag-pink {
-    background: rgba(232, 102, 138, 0.25);
+    background: rgba(var(--accent-rgb), 0.25);
     color: #d64a7a;
 }
 

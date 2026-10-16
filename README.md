@@ -1,11 +1,11 @@
 # Komari Arona & Plana
 
-> **非商业同人作品 · 禁止公开发布**
-> 本主题中的阿洛娜 / 普拉娜形象版权归 Nexon / Yostar《蔚蓝档案》所有。
-> 本项目仅供个人学习与自用部署，**不得公开发布、分发或用于任何商业用途**。
+> **非商业同人作品**
+> 本主题中的阿洛娜 / 普拉娜形象版权归 Nexon / Yostar《蔚蓝档案》所有，
+> 属非商业同人素材，可自由用于非商业目的的传播，**不得用于任何商业用途**。
 >
 > Fan-made, non-commercial. Arona & Plana are © Nexon / Yostar (Blue Archive).
-> Do not publish or redistribute this theme with these assets.
+> Free to use and redistribute for non-commercial purposes; commercial use is not permitted.
 
 一个 Komari 监控主题，支持**日间 / 夜间双形态**：日间为阿洛娜（蔚蓝档案蓝白），夜间为普拉娜（深紫近黑）。切换主题时角色形象、header logo、加载页主视觉与整套配色整体切换。
 
@@ -26,7 +26,7 @@
 2. 上传到 Komari 主题
 3. 在 Komari 配置中选择 **Komari Arona & Plana**
 
-> ⚠️ 请勿将打包产物公开发布或上传到任何下载站 —— 见上方版权声明。
+> 打包产物含非商业同人素材，可自由分享，请勿用于商业用途。
 
 ## 项目结构
 
@@ -139,7 +139,7 @@ python -I make_assets.py
 
 代码与样式采用 MIT License（见 `LICENSE`）。
 
-**角色形象素材不在 MIT 覆盖范围内** —— 阿洛娜 / 普拉娜版权归 Nexon / Yostar，仅供非商业个人使用，不得公开发布或分发。详见 `LICENSE` 末尾的 NOTICE 段。
+**角色形象素材不在 MIT 覆盖范围内** —— 阿洛娜 / 普拉娜版权归 Nexon / Yostar，属非商业同人素材，可在官方同人指引范围内自由传播，不得用于商业用途。详见 `LICENSE` 末尾的 NOTICE 段。
 
 ## 相关链接
 

@@ -1,21 +1,19 @@
-name: Build Package
-
-# 本工作流刻意不创建 GitHub Release。
-# 主题内含阿洛娜 / 普拉娜同人素材，角色形象版权归 Nexon / Yostar《蔚蓝档案》所有，
-# 仅限个人自用部署，不得公开发布或分发。
-# 因此已移除 tags 触发，避免误打标签导致自动公开发布。
+name: Build and Release
 
 on:
+  push:
+    tags:
+      - 'v*'
   workflow_dispatch:
     inputs:
       version:
-        description: 'Package version (e.g., 1.0.0)'
+        description: 'Release version (e.g., 1.0.0)'
         required: true
         default: ''
         type: string
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   test:
@@ -38,10 +36,10 @@ jobs:
       - name: Run tests
         run: npm test
 
-  build:
+  build-and-release:
     needs: test
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -51,10 +49,14 @@ jobs:
       - name: Get version
         id: version
         run: |
-          VERSION="${{ github.event.inputs.version }}"
-          if [ -z "$VERSION" ]; then
-            echo "Error: Version is required for manual dispatch"
-            exit 1
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+            if [ -z "$VERSION" ]; then
+              echo "Error: Version is required for manual dispatch"
+              exit 1
+            fi
+          else
+            VERSION="${GITHUB_REF#refs/tags/v}"
           fi
           # Validate semver format
           if ! echo "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?$'; then
@@ -111,7 +113,21 @@ jobs:
           fi
           echo "Updated version to $VERSION in komari-theme.json and package.json"
 
-      - name: Create package
+      - name: Commit version bump
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet komari-theme.json package.json; then
+            git add komari-theme.json package.json
+            git commit -m "chore(release): bump version to v${VERSION}"
+            git push origin HEAD:${{ github.event.repository.default_branch }}
+            echo "Version bump committed and pushed"
+          else
+            echo "No version changes to commit"
+          fi
+
+      - name: Create release package
         id: package
         run: |
           VERSION="${{ steps.version.outputs.version }}"
@@ -147,22 +163,79 @@ jobs:
           echo "Package created: ${PACKAGE_NAME}.zip"
           ls -la "${PACKAGE_NAME}.zip"
 
-      - name: Upload package artifact
+      - name: Generate release notes
+        id: notes
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            PREV_TAG=$(git describe --tags --abbrev=0 HEAD~1 2>/dev/null || echo "")
+          else
+            PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          fi
+          
+          echo "## Komari Arona & Plana v${VERSION}" > release_notes.md
+          echo "" >> release_notes.md
+          echo "### 📦 Release Package" >> release_notes.md
+          echo "" >> release_notes.md
+          echo "Download \`${{ steps.package.outputs.package_name }}.zip\` and extract to your Komari themes directory." >> release_notes.md
+          echo "" >> release_notes.md
+          echo "### 📋 Included Files" >> release_notes.md
+          echo "- \`dist/\` - Theme files (HTML, CSS, JS, images, flags)" >> release_notes.md
+          echo "- \`komari-theme.json\` - Theme configuration" >> release_notes.md
+          # 列出包中的预览图片
+          for ext in png jpg jpeg webp; do
+            if [ -f "preview.$ext" ]; then
+              echo "- \`preview.$ext\` - Theme preview image" >> release_notes.md
+            fi
+          done
+          if [ -f "arona-plana-preview.jpg" ]; then
+            echo "- \`arona-plana-preview.jpg\` - Theme preview image" >> release_notes.md
+          fi
+          echo "" >> release_notes.md
+          
+          if [ -n "$PREV_TAG" ]; then
+            echo "### 📝 Changes since ${PREV_TAG}" >> release_notes.md
+            echo "" >> release_notes.md
+            git log ${PREV_TAG}..HEAD --pretty=format:"- %s (%h)" --no-merges >> release_notes.md 2>/dev/null || echo "- No commits found" >> release_notes.md
+            echo "" >> release_notes.md
+          fi
+          
+          echo "### 🔗 Quick Links" >> release_notes.md
+          echo "- [Komari Monitor](https://github.com/komari-monitor/komari)" >> release_notes.md
+          echo "" >> release_notes.md
+          echo "---" >> release_notes.md
+          echo "*Built automatically with GitHub Actions*" >> release_notes.md
+          
+          echo "release_notes_file=release_notes.md" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: Komari Arona & Plana v${{ steps.version.outputs.version }}
+          body_path: release_notes.md
+          draft: false
+          prerelease: ${{ contains(steps.version.outputs.version, '-') }}
+          files: |
+            ${{ steps.package.outputs.package_path }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.package.outputs.package_name }}
+          name: komari-arona-plana-v${{ steps.version.outputs.version }}
           path: ${{ steps.package.outputs.package_path }}
-          retention-days: 7
+          retention-days: 30
 
-      - name: Build Summary
+      - name: Release Summary
         run: |
-          echo "## ✅ Package Built Successfully" >> $GITHUB_STEP_SUMMARY
+          echo "## ✅ Release Completed Successfully" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Item | Value |" >> $GITHUB_STEP_SUMMARY
           echo "|------|-------|" >> $GITHUB_STEP_SUMMARY
           echo "| Version | v${{ steps.version.outputs.version }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Package | ${{ steps.package.outputs.package_name }}.zip |" >> $GITHUB_STEP_SUMMARY
+          echo "| Trigger | ${{ github.event_name }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Commit | ${{ github.sha }} |" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "> 本工作流**不会**创建 GitHub Release。主题内含同人素材，" >> $GITHUB_STEP_SUMMARY
-          echo "> 仅供个人自用部署，请勿公开发布或分发。" >> $GITHUB_STEP_SUMMARY

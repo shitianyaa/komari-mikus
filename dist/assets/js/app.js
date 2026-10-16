@@ -17,7 +17,7 @@ import {
     getPreloaderProgress
 } from './ui/preloader.js';
 import { initTheme, initView, applyThemeSettings } from './ui/theme.js';
-import { initLang } from './i18n/index.js';
+import { initLang, t, tr } from './i18n/index.js';
 import { renderGroupFilter, renderAll, updateRealtime } from './ui/nodes.js';
 import { bindEvents } from './ui/events.js';
 import { drawCharts } from './ui/charts/index.js';
@@ -65,19 +65,19 @@ function init() {
     setRenderFunctions(drawCharts, renderAll, updateRealtime);
 
     loadPublicSettings().then(function () {
-        updatePreloader(30, '正在获取配置...');
+        updatePreloader(30, t('preloader_config'));
         initTheme(true);
         initView();
         applyThemeSettings();
         return loadNodes();
     }).then(function () {
-        updatePreloader(60, '正在加载节点...');
+        updatePreloader(60, t('preloader_nodes'));
         renderGroupFilter();
         renderAll();
         bindEvents();
         return loadAllPingData();
     }).then(function () {
-        updatePreloader(90, '正在初始化...');
+        updatePreloader(90, t('preloader_init'));
         renderAll();
         clearPreloaderTimer();
         hidePreloader();
@@ -89,15 +89,15 @@ function init() {
         window.__initRetryCount = retryCount;
 
         if (retryCount <= MAX_RETRIES) {
-            updatePreloader(getPreloaderProgress(), '加载失败，正在重试 (' + retryCount + '/' + MAX_RETRIES + ')...');
+            updatePreloader(getPreloaderProgress(), tr('preloader_retrying', { n: retryCount, max: MAX_RETRIES }));
             setTimeout(init, 3000);
         } else {
             const statusEl = document.getElementById('preloaderStatus');
             if (statusEl) {
-                statusEl.textContent = '加载失败，请刷新页面';
+                statusEl.textContent = t('preloader_failed');
                 statusEl.classList.add('error');
             }
-            updatePreloader(getPreloaderProgress(), '加载失败，请刷新页面');
+            updatePreloader(getPreloaderProgress(), t('preloader_failed'));
             setTimeout(hidePreloader, 3000);
         }
     });

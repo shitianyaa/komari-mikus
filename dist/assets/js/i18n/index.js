@@ -92,7 +92,23 @@ const zhCN = {
     realtime: '实时',
     '1h': '1小时',
     '4h': '4小时',
-    '1d': '1天'
+    '1d': '1天',
+    // 预加载器进度文案
+    preloader_loading: '正在加载资源...',
+    preloader_complete: '加载完成',
+    preloader_styles: '正在加载样式...',
+    preloader_config: '正在获取配置...',
+    preloader_nodes: '正在加载节点...',
+    preloader_connect: '正在连接服务...',
+    preloader_init: '正在初始化...',
+    preloader_retrying: '加载失败，正在重试 ({n}/{max})...',
+    preloader_failed: '加载失败，请刷新页面',
+    // 欢迎区副标题
+    welcome_loading: '欢迎回来，正在加载数据...',
+    welcome_ok: '欢迎回来，一切正常运行中',
+    welcome_down: '欢迎回来，服务暂时不可用',
+    welcome_partial: '欢迎回来，部分服务异常，{n}个节点离线',
+    welcome_major: '欢迎回来，多数服务异常，{n}/{total}个节点离线'
 };
 
 /** 英文翻译字典 */
@@ -180,7 +196,23 @@ const en = {
     realtime: 'Realtime',
     '1h': '1h',
     '4h': '4h',
-    '1d': '1d'
+    '1d': '1d',
+    // Preloader status
+    preloader_loading: 'Loading resources...',
+    preloader_complete: 'Loading complete',
+    preloader_styles: 'Loading styles...',
+    preloader_config: 'Fetching config...',
+    preloader_nodes: 'Loading nodes...',
+    preloader_connect: 'Connecting service...',
+    preloader_init: 'Initializing...',
+    preloader_retrying: 'Load failed, retrying ({n}/{max})...',
+    preloader_failed: 'Load failed, please refresh the page',
+    // Greeting subtitle
+    welcome_loading: 'Welcome back, loading data...',
+    welcome_ok: 'Welcome back, all systems operational',
+    welcome_down: 'Welcome back, services temporarily unavailable',
+    welcome_partial: 'Welcome back, some services affected, {n} nodes offline',
+    welcome_major: 'Welcome back, major service issues, {n}/{total} nodes offline'
 };
 
 /** 日本語翻訳辞書 */
@@ -268,7 +300,23 @@ const ja = {
     realtime: 'リアルタイム',
     '1h': '1時間',
     '4h': '4時間',
-    '1d': '1日'
+    '1d': '1日',
+    // プリローダーのステータス
+    preloader_loading: 'リソースを読み込み中...',
+    preloader_complete: '読み込み完了',
+    preloader_styles: 'スタイルを読み込み中...',
+    preloader_config: '設定を取得中...',
+    preloader_nodes: 'ノードを読み込み中...',
+    preloader_connect: 'サービスに接続中...',
+    preloader_init: '初期化中...',
+    preloader_retrying: '読み込み失敗、再試行中 ({n}/{max})...',
+    preloader_failed: '読み込みに失敗しました。ページを更新してください',
+    // 挨拶サブタイトル
+    welcome_loading: 'おかえりなさい、データを読み込み中...',
+    welcome_ok: 'おかえりなさい、すべて正常に稼働中です',
+    welcome_down: 'おかえりなさい、サービスは一時的に利用できません',
+    welcome_partial: 'おかえりなさい、一部サービスに異常、{n} ノードがオフライン',
+    welcome_major: 'おかえりなさい、多くのサービスに異常、{n}/{total} ノードがオフライン'
 };
 
 /** 国际化字典集合 */
@@ -287,6 +335,22 @@ export function t(key) {
     const lang = state.currentLang || 'zh-CN';
     const dict = i18n[lang] || i18n['zh-CN'];
     return dict[key] || key;
+}
+
+/**
+ * 带占位符插值的翻译，占位符写作 {name}
+ * @param {string} key - 翻译键
+ * @param {object} [vars] - 占位符值，如 { n: 2, max: 3 }
+ * @returns {string} 翻译并插值后的文本
+ */
+export function tr(key, vars) {
+    let s = t(key);
+    if (vars) {
+        Object.keys(vars).forEach(function (k) {
+            s = s.replace('{' + k + '}', vars[k]);
+        });
+    }
+    return s;
 }
 
 /**

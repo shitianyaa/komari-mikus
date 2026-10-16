@@ -6,7 +6,7 @@
  */
 
 import { state } from '../core/state.js';
-import { i18n } from '../i18n/index.js';
+import { i18n, t, tr } from '../i18n/index.js';
 
 /** 模块私有：预加载器当前进度 */
 let preloaderProgress = 0;
@@ -56,23 +56,18 @@ export function updateGreetingSubtitle() {
     const online = state.onlineNodes.length;
     const offline = total - online;
 
-    const isZh = state.currentLang === 'zh-CN';
     let message = '';
 
     if (total === 0) {
-        message = isZh ? '欢迎回来，正在加载数据...' : 'Welcome back, loading data...';
+        message = tr('welcome_loading');
     } else if (offline === 0) {
-        message = isZh ? '欢迎回来，一切正常运行中' : 'Welcome back, all systems operational';
+        message = tr('welcome_ok');
     } else if (online === 0) {
-        message = isZh ? '欢迎回来，服务暂时不可用' : 'Welcome back, services temporarily unavailable';
+        message = tr('welcome_down');
     } else if (offline <= Math.floor(total * 0.3)) {
-        message = isZh
-            ? '欢迎回来，部分服务异常，' + offline + '个节点离线'
-            : 'Welcome back, some services affected, ' + offline + ' nodes offline';
+        message = tr('welcome_partial', { n: offline });
     } else {
-        message = isZh
-            ? '欢迎回来，多数服务异常，' + offline + '/' + total + '个节点离线'
-            : 'Welcome back, major service issues, ' + offline + '/' + total + ' nodes offline';
+        message = tr('welcome_major', { n: offline, total: total });
     }
 
     subtitleEl.textContent = message;
@@ -99,8 +94,7 @@ export function updatePreloader(progress, statusText) {
 export function hidePreloader() {
     const preloader = document.getElementById('preloader');
     if (!preloader) return;
-    const completeText = state.currentLang === 'zh-CN' ? '加载完成' : 'Loading complete';
-    updatePreloader(100, completeText);
+    updatePreloader(100, t('preloader_complete'));
     setTimeout(function () {
         preloader.classList.add('fade-out');
         setTimeout(function () {
@@ -114,12 +108,14 @@ export function hidePreloader() {
  */
 export function startPreloaderSimulation() {
     clearPreloaderTimer();
+    // 先按当前语言重置初始文案，避免非中文用户在首次 tick 前看到 HTML 里的中文
+    updatePreloader(preloaderProgress, t('preloader_loading'));
     const stages = [
-        { target: 20, text: state.currentLang === 'zh-CN' ? '正在加载样式...' : 'Loading styles...' },
-        { target: 40, text: state.currentLang === 'zh-CN' ? '正在获取配置...' : 'Fetching config...' },
-        { target: 60, text: state.currentLang === 'zh-CN' ? '正在加载节点...' : 'Loading nodes...' },
-        { target: 80, text: state.currentLang === 'zh-CN' ? '正在连接服务...' : 'Connecting service...' },
-        { target: 90, text: state.currentLang === 'zh-CN' ? '正在初始化...' : 'Initializing...' }
+        { target: 20, text: t('preloader_styles') },
+        { target: 40, text: t('preloader_config') },
+        { target: 60, text: t('preloader_nodes') },
+        { target: 80, text: t('preloader_connect') },
+        { target: 90, text: t('preloader_init') }
     ];
     let stageIndex = 0;
     preloaderTimer = setInterval(function () {

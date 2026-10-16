@@ -37,6 +37,30 @@ assert.match(
     'default_theme 的 options 必须包含 system'
 );
 
+// ── 1b. 清单字段必须符合 Komari 的格式要求 ────────────────────────
+// 文档规定 short 只能含大小写字母、数字、下划线和连字符，不能为空、
+// 不能为 default。写成 "Arona Plana" 这类带空格的值会让主题装不上。
+
+assert.equal(typeof themeConfig.short, 'string', 'komari-theme.json 缺少 short');
+assert.ok(themeConfig.short.length > 0, 'short 不能为空');
+assert.match(
+    themeConfig.short,
+    /^[A-Za-z0-9_-]+$/,
+    `short 只能包含字母、数字、下划线和连字符：${themeConfig.short}`
+);
+assert.notEqual(
+    themeConfig.short.toLowerCase(),
+    'default',
+    'short 不能为 default'
+);
+
+assert.ok(themeConfig.name, 'komari-theme.json 缺少 name');
+assert.match(
+    String(themeConfig.version),
+    /^\d+\.\d+\.\d+/,
+    `version 应为语义化版本：${themeConfig.version}`
+);
+
 // ── 2. preview 指向的文件必须存在 ─────────────────────────────────
 // release.yml 会 grep 这个字段去复制预览图，名字写错会导致打包缺图。
 

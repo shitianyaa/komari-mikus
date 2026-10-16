@@ -1,11 +1,11 @@
 {
-  "name": "komari-mikus-theme",
+  "name": "komari-arona-plana-theme",
   "version": "2.0.6",
   "type": "module",
   "private": true,
-  "description": "Mikus - Komari monitoring theme with sakura aesthetics",
+  "description": "Arona & Plana - Komari monitoring theme with dual light/dark character forms",
   "scripts": {
-    "test": "node test/algorithms.test.mjs && node test/api-rpc.test.mjs && node test/realtime.test.mjs && node test/ui.test.mjs && node test/css.test.mjs",
+    "test": "node test/algorithms.test.mjs && node test/api-rpc.test.mjs && node test/realtime.test.mjs && node test/ui.test.mjs && node test/theme.test.mjs && node test/css.test.mjs",
     "lint": "eslint dist/assets/js/",
     "lint:check": "eslint dist/assets/js/ --max-warnings 0"
   },

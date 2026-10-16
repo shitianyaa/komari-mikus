@@ -1,10 +1,18 @@
-# Komari Mikus
+# Komari Arona & Plana
 
-一个现代化、优雅的 Komari 监控主题，支持明暗主题切换、网格/表格双视图、WebSocket 实时监控和响应式设计。
+> **非商业同人作品 · 禁止公开发布**
+> 本主题中的阿洛娜 / 普拉娜形象版权归 Nexon / Yostar《蔚蓝档案》所有。
+> 本项目仅供个人学习与自用部署，**不得公开发布、分发或用于任何商业用途**。
+>
+> Fan-made, non-commercial. Arona & Plana are © Nexon / Yostar (Blue Archive).
+> Do not publish or redistribute this theme with these assets.
+
+一个 Komari 监控主题，支持**日间 / 夜间双形态**：日间为阿洛娜（蔚蓝档案蓝白），夜间为普拉娜（深紫近黑）。切换主题时角色形象、header logo、加载页主视觉与整套配色整体切换。
 
 ## 特性
 
-- 🎨 **双主题支持** - 浅色/深色主题无缝切换，支持跟随系统
+- 🌗 **双形态主题** - 浅色 = 阿洛娜 / 深色 = 普拉娜，吉祥物与配色整体切换，支持跟随系统
+- ✨ **电子粒子特效** - 全屏 canvas 光点，颜色随主题变化，尊重 `prefers-reduced-motion`
 - 📊 **双视图模式** - 网格视图和表格视图自由切换
 - 🌐 **多语言支持** - 内置中文/英文/日语切换
 - 📡 **WebSocket 实时监控** - 实时数据更新
@@ -14,22 +22,24 @@
 
 ## 安装
 
-1. 从 [Releases](../../releases) 页面下载最新版本的 ZIP 文件
+1. 将 `dist/` 与 `komari-theme.json` 打成 ZIP
 2. 上传到 Komari 主题
-3. 在 Komari 配置中选择 Mikus 主题
+3. 在 Komari 配置中选择 **Komari Arona & Plana**
+
+> ⚠️ 请勿将打包产物公开发布或上传到任何下载站 —— 见上方版权声明。
 
 ## 项目结构
 
 ```
-komari-mikus/
+komari-arona-plana/
 ├── .github/
 │   └── workflows/
 │       ├── test.yml           # CI 测试（node 测试 + var 检查 + 文件存在检查）
-│       └── release.yml        # 自动化发布工作流
+│       └── release.yml        # 仅本地打包（刻意不创建 GitHub Release）
 ├── dist/
 │   ├── assets/
 │   │   ├── css/              # 样式模块
-│   │   │   ├── base.css      # 基础样式
+│   │   │   ├── base.css      # 基础样式 + 主题变量 + 双形态切换规则
 │   │   │   ├── header.css    # 头部
 │   │   │   ├── stats.css     # 统计
 │   │   │   ├── welcome.css   # 欢迎区域
@@ -44,68 +54,41 @@ komari-mikus/
 │   │   │   ├── modal.css       # 模态框动画+响应式
 │   │   │   └── footer.css    # 页脚
 │   │   ├── flags/            # 国旗 SVG 图标（按需加载）
-│   │   ├── img/              # 图片资源
-│   │   ├── js/
-│   │   │   ├── app.js        # 应用入口
-│   │   │   ├── sakura.js     # 樱花特效（可选，按需加载）
-│   │   │   ├── core/         # 核心状态与常量
-│   │   │   │   ├── state.js
-│   │   │   │   ├── constants.js
-│   │   │   │   └── error-boundary.js
-│   │   │   ├── i18n/         # 国际化
-│   │   │   │   └── index.js  # zh-CN / en / ja
-│   │   │   ├── services/     # 通信层
-│   │   │   │   ├── rpc.js    # RPC2 客户端
-│   │   │   │   ├── api.js    # 数据加载 API
-│   │   │   │   └── realtime.js # 实时数据处理
-│   │   │   ├── ui/           # UI 渲染
-│   │   │   │   ├── nodes.js      # 节点核心逻辑
-│   │   │   │   ├── nodes-grid.js # 网格视图
-│   │   │   │   ├── nodes-table.js # 表格视图
-│   │   │   │   ├── modal.js      # 模态框核心
-│   │   │   │   ├── modal-overview.js # 概览页
-│   │   │   │   ├── modal-latency.js  # 延迟页
-│   │   │   │   ├── events.js  # 事件绑定
-│   │   │   │   ├── preloader.js # 预加载器
-│   │   │   │   ├── theme.js   # 主题管理
-│   │   │   │   └── charts/    # 图表引擎
-│   │   │   │       ├── index.js   # 图表入口
-│   │   │   │       ├── line.js    # 折线图
-│   │   │   │       ├── network.js # 网络图
-│   │   │   │       ├── latency.js # 延迟图
-│   │   │   │       ├── config.js  # 图表配置
-│   │   │   │       ├── utils.js   # 图表绘制工具
-│   │   │   │       └── tooltip.js # Tooltip 交互系统
-│   │   │   ├── algorithms/    # 数据处理算法
-│   │   │   │   ├── index.js   # EWMA/LTTB/插值/峰值检测
-│   │   │   │   ├── pipeline.js # 数据处理管道
-│   │   │   │   └── record-transforms.js # 记录扁平化/合并/前向填充
-│   │   │   └── utils/        # 工具函数
-│   │   │       ├── helpers.js    # 聚合导出
-│   │   │       ├── html.js       # HTML 转义/标签
-│   │   │       ├── ui-helpers.js # UI 辅助
-│   │   │       ├── data-trim.js  # 数据裁剪
-│   │   │       ├── flag.js       # 国旗/地区
-│   │   │       ├── ping.js       # 延迟/Ping
-│   │   │       ├── url.js        # URL/网络
-│   │   │       ├── format.js     # 格式化
-│   │   │       ├── time.js       # 时间处理
-│   │   │       └── color.js      # 颜色计算
+│   │   ├── img/              # 图片资源（arona-* / plana-* 为双形态素材）
+│   │   ├── logo/             # 系统图标
+│   │   └── js/
+│   │       ├── app.js        # 应用入口
+│   │       ├── particles.js  # 电子粒子特效（可选，按需加载）
+│   │       ├── core/         # 核心状态与常量
+│   │       │   ├── state.js
+│   │       │   ├── constants.js
+│   │       │   └── error-boundary.js
+│   │       ├── i18n/         # 国际化
+│   │       │   └── index.js  # zh-CN / en / ja + t() / tr()
+│   │       ├── services/     # 通信层
+│   │       ├── ui/           # UI 渲染
+│   │       ├── algorithms/    # 数据处理算法
+│   │       └── utils/        # 工具函数
 │   └── index.html             # 主页面
 ├── test/                      # 测试
-│   ├── algorithms.test.mjs    # 算法测试（32 用例）
-│   ├── api-rpc.test.mjs       # API/RPC 测试（21 用例）
-│   ├── realtime.test.mjs      # 实时数据处理测试（8 用例）
-│   └── ui.test.mjs            # UI 渲染层纯函数测试（26 用例）
 ├── komari-theme.json          # 主题配置
 ├── package.json               # 项目配置
 ├── eslint.config.js          # ESLint v9+ flat config
 └── README.md
 ```
 
-## 配置选项
+## 主题与素材
 
-主题支持以下配置：
+| 主题 | 角色 | 配色 | 素材 |
+|------|------|------|------|
+| `light` | 阿洛娜 | 蔚蓝档案蓝白 | `assets/img/arona-*.webp` |
+| `dark` | 普拉娜 | 深紫近黑 + 品红/紫 | `assets/img/plana-*.webp` |
+
+切换由 CSS 驱动：`base.css` 里 `.brand-light` / `.brand-dark` 与 `.mascot-light` / `.mascot-dark` 两组类随 `<html data-theme>` 互斥显示，无需 JS 参与图片切换。
+
+`<head>` 里有一段内联脚本，在任何样式表加载前设好 `data-theme`，避免加载页阶段先闪浅色再跳深色。
+
+## 配置选项
 
 | 配置项 | 类型 | 默认值 | 说明 |
 |--------|------|--------|------|
@@ -115,36 +98,50 @@ komari-mikus/
 | `show_network_speed` | switch | true | 显示网络速度 |
 | `show_traffic_tags` | switch | false | 显示流量标签 |
 | `icon_bounce` | switch | true | 图标跳动动画 |
-| `sakura_enabled` | switch | true | 樱花飘落效果 |
+| `sakura_enabled` | switch | true | 电子粒子特效（键名为历史遗留，现控制电子粒子） |
 | `preloader_enabled` | switch | true | 显示加载页面 |
 | `mascot_enabled` | switch | true | 显示欢迎小人 |
-| `mascot_url` | string | - | 自定义小人图片URL |
+| `mascot_url` | string | - | 自定义小人图片URL（设置后两个主题都用这张） |
 | `pc_background_url` | string | - | PC端自定义背景URL（支持图片和视频） |
 | `mobile_background_url` | string | - | 手机端自定义背景URL（支持图片和视频） |
 | `refresh_interval` | number | 2 | 刷新间隔（秒） |
 | `custom_footer` | string | - | 自定义页脚文本 |
+
+> `sakura_enabled` 的键名是历史遗留。它直接对应已保存的配置值，改名会让既有站点的设置失效并回落默认，因此保留键名、只更新显示文案。
 
 ## 开发
 
 ### 本地预览
 
 使用本地 HTTP 服务器预览（ESM 不支持 `file://` 协议）：
+
 ```bash
-npx serve dist
-# 或
-python3 -m http.server 8080 -d dist
+cd dist && python -m http.server 8080
 ```
+
+> 静态服务器没有 Komari 的 RPC 接口，仪表盘会报「加载失败」并重试。这是**预期行为**：加载页、主题切换、双形态素材都可在这一层完整验证；要看真实数据请装进 Komari 实例。
 
 ### 修改主题
 
 1. 修改 `dist/` 目录下的文件
 2. 更新 `komari-theme.json` 配置
-3. 提交更改并创建新版本发布
+3. 跑 `npm test` 与 `npm run lint:check`
+
+### 重新生成角色素材
+
+素材由全身立绘裁出头肩景后导出，生成脚本在仓库外（需要 Pillow）：
+
+```bash
+python -I make_assets.py
+```
 
 ## 许可证
 
-MIT License
+代码与样式采用 MIT License（见 `LICENSE`）。
+
+**角色形象素材不在 MIT 覆盖范围内** —— 阿洛娜 / 普拉娜版权归 Nexon / Yostar，仅供非商业个人使用，不得公开发布或分发。详见 `LICENSE` 末尾的 NOTICE 段。
 
 ## 相关链接
 
 - [Komari Monitor](https://github.com/komari-monitor/komari)
+- [Blue Archive](https://bluearchive.jp/)（角色形象出处，版权归 Nexon / Yostar）

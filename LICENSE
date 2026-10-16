@@ -19,3 +19,30 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+================================================================================
+NOTICE
+================================================================================
+
+The character designs "Arona" and "Plana" are the property of Nexon Games /
+Yostar, from the mobile game "Blue Archive" (蔚蓝档案).
+
+The image assets derived from them in this repository
+(dist/assets/img/arona-*.webp, dist/assets/img/plana-*.webp,
+dist/assets/img/favicon-180.png, arona-plana-preview.jpg) are used on a
+non-commercial, personal-use fan-work basis. They are NOT covered by the MIT
+license above, and this repository must NOT be published, released, or
+redistributed publicly with these assets included.
+
+The MIT license above applies to all original code and styling in this
+repository, which may be published separately once the character assets are
+removed or replaced.
+
+--------------------------------------------------------------------------------
+中文说明
+--------------------------------------------------------------------------------
+
+本主题中的阿洛娜 / 普拉娜角色形象版权归 Nexon / Yostar《蔚蓝档案》所有。
+相关图片素材属非商业同人用途，不在上方 MIT 许可覆盖范围内，
+不得随本仓库公开发布、分发或用于任何商业用途。
+MIT 许可仅适用于本仓库的原创代码与样式。

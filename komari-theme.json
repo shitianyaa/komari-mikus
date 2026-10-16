@@ -1,17 +1,17 @@
 {
-  "name": "Komari Mikus",
-  "short": "Mikus",
-  "description": "A modern, elegant Komari monitoring theme with light/dark theme switching, grid/table dual views, WebSocket real-time monitoring, and responsive design",
+  "name": "Komari Arona & Plana",
+  "short": "Arona Plana",
+  "description": "A Komari monitoring theme with Arona (light, Blue Archive blue-white) and Plana (dark, purple-black) dual forms, grid/table views, WebSocket real-time monitoring, and responsive design",
   "version": "2.0.6",
-  "author": "Miku",
-  "url": "https://github.com/mikus-loli/komari-mikus",
-  "preview": "mikus.jpg",
+  "author": "shitianyaa",
+  "url": "https://github.com/shitianyaa/komari-mikus",
+  "preview": "arona-plana-preview.jpg",
   "configuration": {
     "type": "managed",
     "name": {
-      "en": "Mikus Settings",
-      "zh-CN": "Mikus 设置",
-      "ja": "Mikus 設定"
+      "en": "Arona Settings",
+      "zh-CN": "Arona 设置",
+      "ja": "Arona 設定"
     },
     "data": [
       {
@@ -125,16 +125,16 @@
       {
         "key": "sakura_enabled",
         "name": {
-          "en": "Sakura Petals Effect",
-          "zh-CN": "樱花飘落效果",
-          "ja": "桜吹雪エフェクト"
+          "en": "Particle Field Effect",
+          "zh-CN": "电子粒子特效",
+          "ja": "パーティクルエフェクト"
         },
         "type": "switch",
         "default": true,
         "help": {
-          "en": "Display animated cherry blossom petals falling across the page",
-          "zh-CN": "在页面上显示樱花飘落动画效果",
-          "ja": "ページに桜の花びらが舞い落ちるアニメーションを表示"
+          "en": "Display floating light particles across the page",
+          "zh-CN": "在页面上显示漂浮的电子光点特效",
+          "ja": "ページ全体に浮かぶ光のパーティクルを表示"
         }
       },
       {

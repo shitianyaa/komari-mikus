@@ -2,7 +2,7 @@
   "name": "Komari Arona & Plana",
   "short": "AronaPlana",
   "description": "A Komari monitoring theme with Arona (light, Blue Archive blue-white) and Plana (dark, purple-black) dual forms, grid/table views, WebSocket real-time monitoring, and responsive design",
-  "version": "2.0.6",
+  "version": "3.0.0",
   "author": "shitianyaa",
   "url": "https://github.com/shitianyaa/komari-mikus",
   "preview": "arona-plana-preview.jpg",
